@@ -1,4 +1,3 @@
-#some comment
 def permute(w):
     permuts = []
     for i in range(len(w)):
