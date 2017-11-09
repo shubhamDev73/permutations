@@ -7,21 +7,23 @@ def permute(word):
     Takes a word and returns its permutations'''
 
     allPermutes = []
+
     for i in range(len(word)):
+
         # subWord is the word without one character
         subWord = ""
-
         for j in range(len(word)):
             if j != i:
                 subWord += word[j]
 
         if len(subWord) > 0:
+            # Calling the recursion
             subPermutes = permute(subWord)
             for j in subPermutes:
                 allPermutes.append(word[i] + j)
 
     if len(allPermutes) == 0:
-        allPermutes.append(word)
+        allPermutes = list(word)
     return allPermutes
 
 
@@ -34,21 +36,17 @@ if __name__ == "__main__":
         print("'", word, "' is not A 'WORD'!!! Enter again")
         word = input("Enter a word to get it's permutations : ")
 
-    # Permutations returned contains repititions!!
+    # Permutations returned contains repititions if word has repititions!!
     fakePermutations = permute(word)
     permutations = []
     for i in fakePermutations:
         if i not in permutations:
             permutations.append(i)
 
-    # Who doesn't like sorted lists?
     permutations.sort()
-
-    # Displaying the permutations
     print("All possible permutations of", word, "in alphabetical order are : ")
-    print('\n'.join(permutations))
+    print("\n".join(permutations))
 
-    # Displaying additional information
     print("Total permutations are :", len(permutations))
     for i in range(len(permutations)):
         if permutations[i] == word:
