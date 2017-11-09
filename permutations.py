@@ -1,34 +1,57 @@
-def permute(w):
-    permuts = []
-    for i in range(len(w)):
-        w2 = ""
-        for j in range(len(w)):
+# Printing permutations of a word using recursion
+
+
+def permute(word):
+
+    '''The recursive permuting function
+    Takes a word and returns its permutations'''
+
+    allPermutes = []
+    for i in range(len(word)):
+        # subWord is the word without one character
+        subWord = ""
+
+        for j in range(len(word)):
             if j != i:
-                w2 += w[j]
-        if len(w2) > 0:
-            l = permute(w2)
-            for j in l:
-                p = w[i]+j
-                permuts.append(p)
-    if len(permuts) == 0:
-        permuts.append(w)
-    return permuts
-word = raw_input("Enter a word to get it's permutations: ")
-while " " in word:
-    print "'"+word+"' is not A WORD!!! Enter again"
-    word = raw_input("Enter a word to get it's permutations : ")
-p = permute(word)
-permutations = []
-for i in p:
-    if i not in permutations:
-        permutations.append(i)
-permutations.sort()
-print "All possible permutations of",word,"in alphabetical order are : "
-for i in permutations:
-    print i
-print "Total permutations are :",len(permutations)
-print "Position of",word,"in a dictionary of all it's permutations is",
-for i in range(len(permutations)):
-    if permutations[i] == word:
-        print i+1
-        break
+                subWord += word[j]
+
+        if len(subWord) > 0:
+            subPermutes = permute(subWord)
+            for j in subPermutes:
+                allPermutes.append(word[i] + j)
+
+    if len(allPermutes) == 0:
+        allPermutes.append(word)
+    return allPermutes
+
+
+if __name__ == "__main__":
+    # Running the program
+
+    word = input("Enter a word to get it's permutations: ")
+    # Checking input
+    while " " in word:
+        print("'", word, "' is not A 'WORD'!!! Enter again")
+        word = input("Enter a word to get it's permutations : ")
+
+    # Permutations returned contains repititions!!
+    fakePermutations = permute(word)
+    permutations = []
+    for i in fakePermutations:
+        if i not in permutations:
+            permutations.append(i)
+
+    # Who doesn't like sorted lists?
+    permutations.sort()
+
+    # Displaying the permutations
+    print("All possible permutations of", word, "in alphabetical order are : ")
+    print('\n'.join(permutations))
+
+    # Displaying additional information
+    print("Total permutations are :", len(permutations))
+    for i in range(len(permutations)):
+        if permutations[i] == word:
+            print("Position of", word,
+                  "in a dictionary of all it's permutations is", (i + 1))
+            break
